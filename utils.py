@@ -7,16 +7,10 @@ load_dotenv()
 
 openai_api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY"))
 
-if "conversation_history" not in st.session_state:
-    st.session_state.conversation_history = [
-        {"role": "system", "content": "You are a knowledgeable and polite AI dietitian assistant. You provide structured and concise answers related to fitness, body recomposition, and nutrition."}
-    ]
 
 def clear_history():
     st.session_state.conversation_history = [{"role": "system", "content": "You are a knowledgeable and polite AI dietitian assistant. You provide structured and concise answers related to fitness, body recomposition, and nutrition."}]
     st.session_state.messages = []
-
-
 
 max_history = 5
 
@@ -37,6 +31,11 @@ def prompt_output(users_prompt):
 
 Question of your user is : {users_prompt}
 """
+    
+    if "conversation_history" not in st.session_state:
+        st.session_state.conversation_history = [
+            {"role": "system", "content": "You are a knowledgeable and polite AI dietitian assistant. You provide structured and concise answers related to fitness, body recomposition, and nutrition."}
+        ]
 
     st.session_state.conversation_history.append({'role':'user', 'content':prompt})
 
